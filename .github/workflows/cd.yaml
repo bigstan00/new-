@@ -19,6 +19,9 @@ jobs:
       - name: Get the code from Docker Hub
         run: docker pull bigstan00/test-image:1.1
 
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username bigstan00 --password-@december20..
+
       - name: Run the image as a container
         run: docker run -d -p 3004:3000 --name test-calc bigstan00/test-image:1
 
