@@ -20,7 +20,7 @@ jobs:
         run: docker pull bigstan00/test-image:1.1
 
       - name: Run the image as a container
-        run: docker run -d -p 3004:3000 --name test-calc bigstan00/test-image:1
+        run: docker run -d -p 3004:3000 --name test-calc bigstan00/test-image:1.1
 
       # - name: Send Slack message for deployment success
       #   if: success()
