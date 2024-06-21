@@ -76,13 +76,5 @@ jobs:
           EMAIL: ${{ secrets.EMAIL }}
           PASSWORD: ${{ secrets.PASSWORD }}
         run: |
-          echo "Subject: GitHub Action Notification" > email.txt
-          echo "" >> email.txt
-          echo "This is a notification email from GitHub Actions." >> email.txt
-          echo "" >> email.txt
-          echo "Commit message: ${{ github.event.head_commit.message }}" >> email.txt
-          echo "Committer: ${{ github.event.head_commit.committer.name }}" >> email.txt
-          echo "Repository: ${{ github.repository }}" >> email.txt
-          echo "" >> email.txt
-          cat email.txt | sendmail -v -s "smtp.gmail.com:587" -u $EMAIL -p $PASSWORD omenormanagement@gmail.com
+           send notification to $EMAIL/$PASSWORD
 
