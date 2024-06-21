@@ -40,15 +40,15 @@ jobs:
         env:
            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
-  Notification:        
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      
-      - name: Send email notification
-        env:
-          EMAIL: ${{ secrets.EMAIL }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-        run: |
-          $EMAIL/$PASSWORD
+      - name: "Send email notification for the latest version of the deployment"
+        uses: dawidd6/action-send-mail@v3
+        with:
+             username: prcenturionboy@gmail.com
+             password: ${{ secrets.EMAIL_PASSWORD }}
+             server_address: smtp.gmail.com
+             server_port: 465
+             secure: true
+             subject: "New Docker Container release"
+             to: "dewcapontaareh@gmail.com"
+             from: "Admin_DevOps"
+             body: "New Docker Container startup"
