@@ -76,6 +76,6 @@ jobs:
           EMAIL: ${{ secrets.EMAIL }}
           PASSWORD: ${{ secrets.PASSWORD }}
         run: |
-          cat email.txt | sendmail -v -s "smtp.gmail.com:587" -au $EMAIL -ap $PASSWORD your-email@example.com
+          cat email.txt | sendmail -v -s "smtp.gmail.com:587" -au $EMAIL -ap $PASSWORD omenormanagement@gmail.com
 
 
