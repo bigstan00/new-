@@ -43,12 +43,12 @@ jobs:
       - name: "Send email notification for the latest version of the deployment"
         uses: dawidd6/action-send-mail@v3
         with:
-             username: prcenturionboy@gmail.com
-             password: ${{ secrets.EMAIL_PASSWORD }}
+             username: ${{ secrets.EMAIL }}
+             password: ${{ secrets.PASSWORD }}
              server_address: smtp.gmail.com
              server_port: 465
              secure: true
              subject: "New Docker Container release"
-             to: "dewcapontaareh@gmail.com"
+             to: "omenormanagements@gmail.com"
              from: "Admin_DevOps"
              body: "New Docker Container startup"
