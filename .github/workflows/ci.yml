@@ -63,19 +63,96 @@ jobs:
            slack-message: "GitHub build failed. 😞\n[Build URL](${{ github.event.head_commit.url }})"
          env:
            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-            
-  notification:
+        ## This action is to send email notification for the randomly generated app version numbers
+      - name: Notification Email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          username: omenormanagement@gmail.com
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          subject: "New Docker Image release"
+          to: "omenormanagement@gmail.com"
+          from: "Admin_DevOps"
+          body: "New image release version:1.1"
+
+
+name: CI
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: "Log into Docker Hub"
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Docker image
+        env:
+          IMAGE_NAME: test-image
+          VERSION: 1
+          USERNAME: bigstan00
+        run: |
+          docker build -t $USERNAME/$IMAGE_NAME:$VERSION .
+
+      - name: Push Docker image to Docker Hub
+        env:
+          IMAGE_NAME: test-image
+          VERSION: 1
+          USERNAME: bigstan00
+        run: |
+          docker push $USERNAME/$IMAGE_NAME:$VERSION
+
+  notify:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      
-      - name: Send email notification
+      - name: Send Slack message for build success
+        if: success()
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          channel-id: 'C078VD8T2NN'  # Replace with your channel ID
+          slack-message: "GitHub build succeeded! 🎉\n[Build URL](${{ github.event.head_commit.url }})"
         env:
-          EMAIL: ${{ secrets.EMAIL }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-        run: |
-          cat email.txt | sendmail -v -s "smtp.gmail.com:587" -au $EMAIL -ap $PASSWORD omenormanagement@gmail.com
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
+      - name: Send Slack message for build failure
+        if: failure()
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          channel-id: 'D078WC91R62'  # Replace with your channel ID
+          slack-message: "GitHub build failed. 😞\n[Build URL](${{ github.event.head_commit.url }})"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+       ## This action is to send email notification for the randomly generated app version numbers
+      - name: "Send email notification for the latest version of the deployment"
+        uses: dawidd6/action-send-mail@v3
+        with:
+         username: omenormanagement@gmail.com
+         password: ${{ secrets.PASSWORD }}
+         server_address: smtp.gmail.com
+         server_port: 465
+         secure: true
+         subject: "New Docker Image release"
+         to: "omenormanagement@gmail.com"
+         from: "Admin_DevOps"
+         body: "New image release version:1.1"
 
