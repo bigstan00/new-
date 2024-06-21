@@ -49,6 +49,6 @@ jobs:
              server_port: 465
              secure: true
              subject: "New Docker Container release"
-             to: "omenormanagements@gmail.com"
+             to: "omenormanagement@gmail.com"
              from: "Admin_DevOps"
              body: "New Docker Container startup"
