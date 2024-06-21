@@ -59,4 +59,4 @@ jobs:
           echo "Committer: ${{ github.event.head_commit.committer.name }}" >> email.txt
           echo "Repository: ${{ github.repository }}" >> email.txt
           echo "" >> email.txt
-          cat email.txt | sendmail -v -s "smtp.gmail.com:587" -u $EMAIL -p $PASSWORD sdakwoji@gmail.com
+          cat email.txt | sendmail -v -s "smtp.gmail.com:587" -u $EMAIL -p $PASSWORD omenormanagement@gmail.com
