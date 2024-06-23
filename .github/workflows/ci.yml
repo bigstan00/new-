@@ -67,7 +67,7 @@ jobs:
       - name: "Send email notification for the latest version of the deployment"
         uses: dawidd6/action-send-mail@v3
         with:
-         username: omenormanagement@gmail.com
+         username: ${{ secrets.EMAIL }}
          password: ${{ secrets.EMAIL_PASSWORD }}
          server_address: smtp.gmail.com
          server_port: 465
