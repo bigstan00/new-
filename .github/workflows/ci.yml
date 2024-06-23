@@ -65,7 +65,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
        ## This action is to send email notification for the randomly generated app version numbers
       - name: "Send email notification for the latest version of the deployment"
-        uses: bigstan00/action-send-mail@v3
+        uses: dawidd6/action-send-mail@v3
         with:
          username: omenormanagement@gmail.com
          password: ${{ secrets.PASSWORD }}
