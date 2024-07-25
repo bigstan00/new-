@@ -94,7 +94,9 @@ jobs:
               sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
         - name: Verifiy minikube installation 
-          run: minikube version
+          run: |
+            minikube version
+            minikube start
 
 
 
