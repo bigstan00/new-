@@ -73,7 +73,7 @@ jobs:
         run: |
           # Install kubectl
             sudo apt-get update && sudo apt-get upgrade
-            sudo snap install kubectl
+            sudo snap install kubectl -y
 
       - name: Verify kubectl version
         run: kubectl version
