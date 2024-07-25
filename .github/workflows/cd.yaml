@@ -52,3 +52,21 @@ jobs:
          to: "omenormanagement@gmail.com"
          from: "Admin_DevOps"
          body: "New image release version:1.1"
+
+  deploy:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install kubectl
+        run: |
+          # Install kubectl
+          sudo apt-get update && sudo apt-get install -y apt-transport-https
+          curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          sudo apt-get update
+          sudo apt-get install -y kubectl
+
+      - name: Verify kubectl version
+        run: kubectl version --client
