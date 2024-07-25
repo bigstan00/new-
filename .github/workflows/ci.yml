@@ -85,9 +85,9 @@ jobs:
         - name: Checkout code
           uses: actions/checkout@v2
 
-        - name: Install kubectl
+        - name: Install minikube
           run: |
-            # Install kubectl
+            # Install minikube
               sudo apt update
               sudo apt install -y curl wget apt-transport-https
               curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
