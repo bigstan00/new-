@@ -106,7 +106,7 @@ jobs:
             metadata:
               name: docker-app
             spec:
-              replicas: 3
+              replicas: 3   #amount of pods to be created by this deployment
               selector:
                 matchLabels:
                   app: app
@@ -117,14 +117,16 @@ jobs:
                 spec:
                   containers:
                     - name: docker-app
-                      image: test-image:1
+                      image: test-image:1 #name of container deployed in the pods
                       ports:
                         - containerPort: 80' > deployment.yaml
             kubectl apply -f deployment.yaml
 
         - name: Check deployment status
           run: |
-            kubectl get nodes
+            kubectl get deployment --all-namespaces   #gives you the deployment name and namespaces
+            kubectl get pods -A    #gives you the pods and namespaces
+            
         - name: Deploy Kubernetes Service
           run: |
             echo '---
