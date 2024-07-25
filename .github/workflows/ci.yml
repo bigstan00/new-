@@ -117,7 +117,7 @@ jobs:
                 spec:
                   containers:
                     - name: docker-app
-                      image: dockersamples/static-site:latest
+                      image: test-image:1
                       ports:
                         - containerPort: 80' > deployment.yaml
             kubectl apply -f deployment.yaml
