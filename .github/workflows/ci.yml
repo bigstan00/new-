@@ -125,6 +125,26 @@ jobs:
         - name: Check deployment status
           run: |
             kubectl get nodes
+        - name: Deploy Kubernetes Service
+          run: |
+            echo '---
+            apiVersion: v1
+            kind: Service
+            metadata:
+              name: app-services
+            spec:
+              selector:
+                app: app
+              ports:
+                - port: 80
+                  targetPort: 80
+              type: LoadBalancer' > service.yaml
+            kubectl apply -f service.yaml
+
+        - name: Check deployment status
+          run: |
+            kubectl get svc
+ 
 
 
 
