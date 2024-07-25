@@ -1,4 +1,3 @@
-
 name: CI
 on:
   push:
@@ -8,7 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
 
@@ -20,7 +18,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: "Log into Docker Hub"
+      - name: Log into Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -63,17 +61,21 @@ jobs:
           slack-message: "GitHub build failed. 😞\n[Build URL](${{ github.event.head_commit.url }})"
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-       ## This action is to send email notification for the randomly generated app version numbers
-      - name: "Send email notification for the latest version of the deployment"
-        uses: dawidd6/action-send-mail@v3
-        with:
-         username: ${{ secrets.EMAIL }}
-         password: ${{ secrets.EMAIL_PASSWORD }}
-         server_address: smtp.gmail.com
-         server_port: 465
-         secure: true
-         subject: "New Docker Image release"
-         to: "omenormanagement@gmail.com"
-         from: "Admin_DevOps"
-         body: "New image release version:1.1"
+
+  install:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install kubectl
+        run: |
+          # Install kubectl
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/kubectl
+
+      - name: Verify kubectl version
+        run: kubectl version
 
