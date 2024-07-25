@@ -120,7 +120,7 @@ jobs:
                   - name: docker-app
                     image: dockersamples/static-site:latest
                     ports:
-                      - containerPort: 80" >> deployment.yaml
+                      - containerPort: 80" > deployment.yaml
               kubectl apply -f deployment.yaml
                 
 
